@@ -1,3 +1,4 @@
+
 # HealthCore — Bitácora de Desarrollo
 
 Documento vivo que registra el avance real del proyecto (qué se hizo, en qué orden, y por qué). Se actualiza a medida que se implementa. Para el plan original y las decisiones de arquitectura, ver el DRF (`DRF_Plataforma_IPS_v1_0_APA.pdf`) y el resumen de decisiones más abajo.
@@ -36,7 +37,7 @@ Documento vivo que registra el avance real del proyecto (qué se hizo, en qué o
 ## Cómo levantar el proyecto
 
 ```bash
-docker compose up -d                  # Postgres 16 en localhost:5433
+docker compose up -d                  # Postgres 16 en localhost:5434
 cd Backend && npm run dev             # API en http://localhost:4000
 cd Frontend && npm run dev            # App en http://localhost:5173 (proxy a la API)
 ```

@@ -1,4 +1,4 @@
-import styles from './AsignacionRolSection.module.css';
+import styles from '../../styles/users/AsignacionRolSection.module.css';
 
 export default function AsignacionRolSection({ roles, rolId, onSelect }) {
   return (

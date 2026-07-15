@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { getBreadcrumb } from '../components/layout/pageHeader';
-import styles from './ComingSoonPage.module.css';
+import styles from '../styles/common/ComingSoonPage.module.css';
 
 export default function ComingSoonPage() {
   const location = useLocation();

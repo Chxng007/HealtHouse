@@ -1,4 +1,4 @@
-import styles from './Toggle.module.css';
+import styles from '../../styles/common/Toggle.module.css';
 
 export default function Toggle({ checked, onChange, activeLabel = 'Activo', inactiveLabel = 'Inactivo' }) {
   return (

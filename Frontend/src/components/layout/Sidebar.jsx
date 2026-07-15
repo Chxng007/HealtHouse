@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { sidebarItems } from './sidebarConfig';
-import styles from './Sidebar.module.css';
+import styles from '../../styles/layout/Sidebar.module.css';
 
 function isChildActive(item, pathname) {
   return item.children?.some((child) => pathname.startsWith(child.path)) ?? false;

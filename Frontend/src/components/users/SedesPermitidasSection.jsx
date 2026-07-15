@@ -1,4 +1,4 @@
-import styles from './SedesPermitidasSection.module.css';
+import styles from '../../styles/users/SedesPermitidasSection.module.css';
 
 export default function SedesPermitidasSection({ sedes, sedeIds, onToggle }) {
   return (

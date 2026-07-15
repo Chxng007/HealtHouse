@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import styles from './InfoUsuarioSection.module.css';
+import styles from '../../styles/users/InfoUsuarioSection.module.css';
 import { TIPOS_DOCUMENTO } from '../../constants/tiposDocumento';
 import { CARGOS } from '../../constants/cargos';
 import Toggle from '../common/Toggle';

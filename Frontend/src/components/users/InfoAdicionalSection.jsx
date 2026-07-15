@@ -1,4 +1,4 @@
-import styles from './InfoAdicionalSection.module.css';
+import styles from '../../styles/users/InfoAdicionalSection.module.css';
 
 function formatFecha(iso) {
   if (!iso) return 'Nunca';

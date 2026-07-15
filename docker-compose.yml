@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: healthcore
       POSTGRES_DB: healthcore_dev
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - healthcore_pgdata:/var/lib/postgresql/data
 

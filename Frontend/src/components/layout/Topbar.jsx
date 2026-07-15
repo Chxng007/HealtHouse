@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { getBreadcrumb } from './pageHeader';
-import styles from './Topbar.module.css';
+import styles from '../../styles/layout/Topbar.module.css';
 
 export default function Topbar() {
   const location = useLocation();

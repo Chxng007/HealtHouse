@@ -1,4 +1,4 @@
-import styles from './UserFormTabs.module.css';
+import styles from '../../styles/users/UserFormTabs.module.css';
 
 const TABS = ['Información General', 'Roles y Permisos', 'Sedes Asignadas', 'Auditoría'];
 

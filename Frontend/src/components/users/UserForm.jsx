@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './UserForm.module.css';
+import styles from '../../styles/users/UserForm.module.css';
 import UserFormTabs from './UserFormTabs';
 import UserFormFooter from './UserFormFooter';
 import InfoUsuarioSection from './InfoUsuarioSection';

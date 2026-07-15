@@ -1,4 +1,4 @@
-import styles from './PermisosRapidosSection.module.css';
+import styles from '../../styles/users/PermisosRapidosSection.module.css';
 import { PERMISOS_MODULOS, PERMISOS_HEADERS } from '../../constants/permisosModulos';
 
 const CAMPOS = ['ver', 'crear', 'editar', 'eliminar', 'imprimir', 'exportar'];

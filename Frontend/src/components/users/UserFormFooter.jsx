@@ -1,4 +1,4 @@
-import styles from './UserFormFooter.module.css';
+import styles from '../../styles/users/UserFormFooter.module.css';
 
 export default function UserFormFooter({ isEditMode, activo, onDesactivar, onLimpiar, saving }) {
   return (
