@@ -1,0 +1,56 @@
+.section {
+  padding: 22px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rowLabel {
+  flex: 1;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.rowValue {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-label);
+}
+
+.badge {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 14px;
+}
+
+.badgeInactive {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-dark);
+}

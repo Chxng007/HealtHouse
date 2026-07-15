@@ -1,0 +1,52 @@
+:root {
+  --color-sidebar-bg: #111e4e;
+  --color-sidebar-bg-dark: #0c1740;
+  --color-sidebar-text-muted: #9fb0d8;
+  --color-sidebar-text-dim: #c6d2ee;
+  --color-sidebar-child-text: #9fb0d8;
+  --color-sidebar-child-dot: #5d6fa3;
+  --color-sidebar-footer-text: #7488bd;
+
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-bg: #eaf1ff;
+
+  --color-success: #22c55e;
+  --color-success-dark: #16a34a;
+  --color-success-bg: #dcfce7;
+  --color-success-text: #15803d;
+
+  --color-danger: #ef4444;
+  --color-danger-dark: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fca5a5;
+
+  --color-warning: #eab308;
+  --color-accent-red: #e11d48;
+
+  --color-bg-page: #eef1f7;
+  --color-bg-surface: #ffffff;
+  --color-bg-muted: #f4f6fb;
+  --color-bg-subtle: #f8fafc;
+
+  --border-subtle: #e8ecf4;
+  --border-default: #e5e9f2;
+  --border-strong: #d8dfec;
+
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-heading: #111e4e;
+  --text-label: #334155;
+  --text-placeholder: #9aa3b5;
+
+  --radius-sm: 8px;
+  --radius-md: 9px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-primary-btn: 0 2px 6px rgba(37, 99, 235, 0.35);
+
+  --font-sans: 'Nunito Sans', system-ui, sans-serif;
+}

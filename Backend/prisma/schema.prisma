@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoDocumento {
+  CC
+  CE
+  PA
+  TI
+}
+
+enum ModuloPermiso {
+  pacientes
+  historia_clinica
+  agenda
+  formulas_ordenes
+  reportes
+  administracion
+}
+
+model Role {
+  id        String   @id @default(cuid())
+  nombre    String   @unique
+  slug      String   @unique
+  icono     String
+  color     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
+
+  @@map("roles")
+}
+
+model Sede {
+  id          String     @id @default(cuid())
+  nombre      String
+  ciudad      String
+  esPrincipal Boolean    @default(false)
+  activa      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  usuarios    UserSede[]
+
+  @@map("sedes")
+}
+
+model User {
+  id                 String        @id @default(cuid())
+  nombres            String
+  apellidos          String
+  tipoDocumento      TipoDocumento
+  numeroDocumento    String        @unique
+  correo             String        @unique
+  telefono           String?
+  cargoProfesion     String
+  rolId              String
+  rol                Role          @relation(fields: [rolId], references: [id])
+  activo             Boolean       @default(true)
+  fotoUrl            String?
+  passwordHash       String
+  mustChangePassword Boolean       @default(true)
+  lastAccess         DateTime?
+  failedAttempts     Int           @default(0)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  sedes    UserSede[]
+  permisos UserPermission[]
+
+  @@map("users")
+}
+
+model UserSede {
+  userId String
+  sedeId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sede   Sede @relation(fields: [sedeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, sedeId])
+  @@map("user_sedes")
+}
+
+model UserPermission {
+  id       String        @id @default(cuid())
+  userId   String
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  modulo   ModuloPermiso
+  ver      Boolean       @default(false)
+  crear    Boolean       @default(false)
+  editar   Boolean       @default(false)
+  eliminar Boolean       @default(false)
+  imprimir Boolean       @default(false)
+  exportar Boolean       @default(false)
+
+  @@unique([userId, modulo])
+  @@map("user_permissions")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  accion    String
+  entidad   String
+  entidadId String
+  detalle   Json?
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+}

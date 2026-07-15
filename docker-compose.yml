@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: healthcore_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: healthcore
+      POSTGRES_PASSWORD: healthcore
+      POSTGRES_DB: healthcore_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - healthcore_pgdata:/var/lib/postgresql/data
+
+volumes:
+  healthcore_pgdata:

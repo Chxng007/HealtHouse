@@ -1,0 +1,35 @@
+.footer {
+  padding: 0 24px 24px 24px;
+  display: grid;
+  grid-template-columns: 1fr 470px;
+  gap: 22px;
+  align-items: center;
+}
+
+.infoBox {
+  background: var(--color-primary-bg);
+  border: 1px solid #d3e2ff;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+}
+
+.infoTitle {
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--text-heading);
+}
+
+.infoText {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
