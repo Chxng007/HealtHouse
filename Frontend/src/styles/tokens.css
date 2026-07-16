@@ -22,7 +22,18 @@
   --color-danger-border: #fca5a5;
 
   --color-warning: #eab308;
+  --color-warning-bg: #fef9c3;
+  --color-warning-text: #a16207;
   --color-accent-red: #e11d48;
+
+  --color-neutral-bg: #f1f5f9;
+  --color-neutral-text: #64748b;
+
+  --color-success-bg-soft: #f0fdf4;
+  --color-amber: #d97706;
+  --color-amber-bg: #fef3c7;
+  --color-pink: #db2777;
+  --color-pink-bg: #fce7f3;
 
   --color-bg-page: #eef1f7;
   --color-bg-surface: #ffffff;

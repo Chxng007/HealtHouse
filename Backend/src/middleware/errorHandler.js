@@ -22,10 +22,10 @@ function errorHandler(err, req, res, next) {
       return res.status(409).json({ error: UNIQUE_FIELD_LABELS[field] ?? 'El registro ya existe.' });
     }
     if (err.code === 'P2025') {
-      return res.status(404).json({ error: 'Usuario no encontrado.' });
+      return res.status(404).json({ error: 'Registro no encontrado.' });
     }
     if (err.code === 'P2003') {
-      return res.status(400).json({ error: 'Referencia inválida (rol o sede inexistente).' });
+      return res.status(400).json({ error: 'Referencia inválida (registro relacionado inexistente).' });
     }
   }
 

@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const { EPS } = require('./seedData/eps');
+const { PACIENTES } = require('./seedData/pacientes');
 
 const prisma = new PrismaClient();
 
@@ -75,6 +77,27 @@ async function main() {
     },
   });
   console.log('Usuario admin semilla: admin@healthhouse.co / Admin12345');
+
+  for (const eps of EPS) {
+    await prisma.eps.upsert({ where: { codigo: eps.codigo }, update: { nombre: eps.nombre }, create: eps });
+  }
+  console.log(`EPS sembradas: ${EPS.length}`);
+
+  for (const { epsNombre, contactos, fechaNacimiento, ...paciente } of PACIENTES) {
+    const eps = await prisma.eps.findUniqueOrThrow({ where: { nombre: epsNombre } });
+    await prisma.paciente.upsert({
+      where: { numeroDocumento: paciente.numeroDocumento },
+      update: {},
+      create: {
+        ...paciente,
+        fechaNacimiento: new Date(fechaNacimiento),
+        epsId: eps.id,
+        sedeRegistroId: sedePrincipal.id,
+        contactos: { create: contactos },
+      },
+    });
+  }
+  console.log(`Pacientes demo sembrados: ${PACIENTES.length}`);
 }
 
 main()

@@ -1,0 +1,38 @@
+.card {
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.vacio {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  background: var(--color-bg-subtle);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1.3fr 40px;
+  gap: 14px;
+  align-items: end;
+}
+
+.eliminarBtn {
+  height: 42px;
+  border: 1px solid var(--color-danger-border);
+  background: #fff;
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eliminarBtn:hover {
+  background: var(--color-danger-bg);
+}

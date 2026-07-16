@@ -1,0 +1,21 @@
+.tabs {
+  display: flex;
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  padding: 14px 18px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--text-tertiary);
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.tab.active {
+  font-weight: 800;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}

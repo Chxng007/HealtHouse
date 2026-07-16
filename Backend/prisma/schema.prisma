@@ -12,6 +12,48 @@ enum TipoDocumento {
   CE
   PA
   TI
+  RC
+  PE
+  PPT
+}
+
+enum Sexo {
+  masculino
+  femenino
+  intersexual
+}
+
+enum EstadoCivil {
+  soltero
+  casado
+  union_libre
+  separado
+  divorciado
+  viudo
+}
+
+enum GrupoSanguineo {
+  A
+  B
+  AB
+  O
+}
+
+enum Rh {
+  positivo
+  negativo
+}
+
+enum Regimen {
+  contributivo
+  subsidiado
+  especial
+  particular
+}
+
+enum Zona {
+  urbana
+  rural
 }
 
 enum ModuloPermiso {
@@ -45,8 +87,67 @@ model Sede {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   usuarios    UserSede[]
+  pacientesRegistrados Paciente[]
 
   @@map("sedes")
+}
+
+model Eps {
+  id        String     @id @default(cuid())
+  codigo    String     @unique
+  nombre    String     @unique
+  activa    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  pacientes Paciente[]
+
+  @@map("eps")
+}
+
+model Paciente {
+  id              String          @id @default(cuid())
+  tipoDocumento   TipoDocumento
+  numeroDocumento String          @unique
+  nombres         String
+  apellidos       String
+  fechaNacimiento DateTime        @db.Date
+  sexo            Sexo
+  estadoCivil     EstadoCivil?
+  ocupacion       String?
+  grupoSanguineo  GrupoSanguineo?
+  rh              Rh?
+  telefono        String
+  correo          String?
+  direccion       String
+  municipio       String
+  zona            Zona            @default(urbana)
+  epsId           String
+  eps             Eps             @relation(fields: [epsId], references: [id])
+  regimen         Regimen
+  nroAfiliacion   String?
+  sedeRegistroId  String?
+  sedeRegistro    Sede?           @relation(fields: [sedeRegistroId], references: [id])
+  fotoUrl         String?
+  activo          Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  contactos ContactoEmergencia[]
+
+  @@index([apellidos, nombres])
+  @@map("pacientes")
+}
+
+model ContactoEmergencia {
+  id         String   @id @default(cuid())
+  pacienteId String
+  paciente   Paciente @relation(fields: [pacienteId], references: [id], onDelete: Cascade)
+  nombre     String
+  parentesco String
+  telefono   String
+  direccion  String?
+
+  @@map("contactos_emergencia")
 }
 
 model User {

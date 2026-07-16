@@ -1,0 +1,158 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.headerCard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 24px;
+}
+
+.volverBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.headerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.headerNombreFila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerNombre {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.headerMeta {
+  display: flex;
+  gap: 18px;
+  margin-top: 6px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.tabsCard {
+  padding: 0 10px;
+}
+
+.seccion {
+  padding: 24px 26px;
+}
+
+.seccionTitulo {
+  margin: 0 0 18px 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.seccionTabla {
+  padding: 0;
+}
+
+.seccionTituloTabla {
+  padding: 22px 26px 8px 26px;
+  margin: 0;
+}
+
+.gridCampos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 20px;
+}
+
+.gridCampos3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 20px;
+}
+
+.campoLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  margin-bottom: 5px;
+}
+
+.campoValor {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tablaHeader,
+.tablaFila {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  padding: 10px 26px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.tablaHeaderHistorial,
+.tablaFilaHistorial {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr 1.4fr 0.8fr;
+  padding: 10px 26px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.tablaHeader,
+.tablaHeaderHistorial {
+  background: var(--color-bg-subtle);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+.tablaFila,
+.tablaFilaHistorial {
+  border-top: 1px solid #eef1f7;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  align-items: center;
+}
+
+.tablaNombre {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tablaVacia {
+  padding: 28px 26px;
+  color: var(--text-tertiary);
+  font-size: 13.5px;
+  border-top: 1px solid #eef1f7;
+}
+
+.cargando,
+.error {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-tertiary);
+}
+
+.error {
+  color: var(--color-danger-dark);
+}

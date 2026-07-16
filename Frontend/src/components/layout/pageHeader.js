@@ -5,6 +5,14 @@ export function getBreadcrumb(pathname) {
     return { module: 'Gestión de Usuarios', page: 'Crear / Editar Usuario' };
   }
 
+  if (pathname.startsWith('/pacientes')) {
+    let page = 'Lista de Pacientes';
+    if (pathname === '/pacientes/nuevo') page = 'Nuevo Paciente';
+    else if (pathname.endsWith('/editar')) page = 'Editar Paciente';
+    else if (pathname !== '/pacientes') page = 'Perfil de Paciente';
+    return { module: 'Gestión de Pacientes', page };
+  }
+
   for (const item of sidebarItems) {
     if (item.children) {
       const child = item.children.find((c) => pathname.startsWith(c.path));
