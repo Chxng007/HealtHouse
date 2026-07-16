@@ -15,6 +15,7 @@ router.use('/usuarios', usuariosRoutes);
 router.use('/eps', epsRoutes);
 router.use('/pacientes', pacientesRoutes);
 router.use('/citas', agendaRoutes);
+router.use('/admisiones', require('./admisiones.routes'));
 router.use('/especialidades', especialidadesRouter);
 router.use('/consultorios', consultoriosRouter);
 router.use('/medicos', medicosRouter);

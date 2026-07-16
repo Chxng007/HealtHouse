@@ -1,0 +1,118 @@
+.card {
+  padding: 24px 26px;
+}
+
+.titulo {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.datosGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
+  margin-top: 16px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.datoLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  margin-bottom: 3px;
+}
+
+.datoValor {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.editarLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.citasBloque {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opcionCita {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13.5px;
+  color: var(--text-label);
+  cursor: pointer;
+}
+.opcionCita:has(input:checked) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.sinCitas {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+
+.colSpan2 {
+  grid-column: span 2;
+}
+
+.ayuda {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 10px;
+}
+
+.error {
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+
+.exito {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}

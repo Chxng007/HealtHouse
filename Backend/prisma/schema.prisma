@@ -76,6 +76,19 @@ enum EstadoRecordatorio {
   fallido
 }
 
+enum TipoAtencion {
+  consulta
+  procedimiento
+  urgencia
+}
+
+enum EstadoAdmision {
+  en_espera
+  en_atencion
+  atendido
+  cancelado
+}
+
 enum ModuloPermiso {
   pacientes
   historia_clinica
@@ -110,6 +123,7 @@ model Sede {
   pacientesRegistrados Paciente[]
   consultorios Consultorio[]
   citas        Cita[]
+  admisiones   Admision[]
 
   @@map("sedes")
 }
@@ -122,6 +136,7 @@ model Eps {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   pacientes Paciente[]
+  admisiones Admision[]
 
   @@map("eps")
 }
@@ -154,8 +169,9 @@ model Paciente {
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 
-  contactos ContactoEmergencia[]
-  citas     Cita[]
+  contactos  ContactoEmergencia[]
+  citas      Cita[]
+  admisiones Admision[]
 
   @@index([apellidos, nombres])
   @@map("pacientes")
@@ -225,11 +241,38 @@ model Cita {
   updatedAt            DateTime   @updatedAt
 
   recordatorios Recordatorio[]
+  admision      Admision?
 
   @@index([medicoId, inicio])
   @@index([consultorioId, inicio])
   @@index([sedeId, inicio])
   @@map("citas")
+}
+
+model Admision {
+  id                 String         @id @default(cuid())
+  pacienteId         String
+  paciente           Paciente       @relation(fields: [pacienteId], references: [id])
+  citaId             String?        @unique
+  cita               Cita?          @relation(fields: [citaId], references: [id])
+  sedeId             String
+  sede               Sede           @relation(fields: [sedeId], references: [id])
+  medicoId           String
+  medico             User           @relation("AdmisionesMedico", fields: [medicoId], references: [id])
+  tipoAtencion       TipoAtencion
+  epsId              String?
+  eps                Eps?           @relation(fields: [epsId], references: [id])
+  regimen            Regimen?
+  numeroAutorizacion String?
+  copago             Decimal?       @db.Decimal(12, 2)
+  estado             EstadoAdmision @default(en_espera)
+  horaLlegada        DateTime       @default(now())
+  observaciones      String?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@index([sedeId, horaLlegada])
+  @@map("admisiones")
 }
 
 model Recordatorio {
@@ -269,6 +312,7 @@ model User {
   permisos UserPermission[]
   consultoriosAsignados Consultorio[] @relation("ConsultorioMedico")
   citasComoMedico       Cita[]        @relation("CitasMedico")
+  admisionesComoMedico  Admision[]    @relation("AdmisionesMedico")
 
   @@map("users")
 }

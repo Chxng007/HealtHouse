@@ -9,7 +9,7 @@ function invalido(res, parsed) {
 
 async function listCitas(req, res, next) {
   try {
-    const { desde, hasta, medicoId, sedeId, consultorioId, estado } = req.query;
+    const { desde, hasta, medicoId, sedeId, consultorioId, estado, pacienteId } = req.query;
     const citas = await agendaService.listCitas({
       desde: desde ? new Date(desde) : undefined,
       hasta: hasta ? new Date(hasta) : undefined,
@@ -17,6 +17,7 @@ async function listCitas(req, res, next) {
       sedeId,
       consultorioId,
       estado,
+      pacienteId,
     });
     res.json(citas);
   } catch (err) {

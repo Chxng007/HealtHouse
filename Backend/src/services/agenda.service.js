@@ -44,7 +44,7 @@ async function assertSinSolape(tx, { medicoId, consultorioId, inicio, fin, ignor
   }
 }
 
-async function listCitas({ desde, hasta, medicoId, sedeId, consultorioId, estado } = {}) {
+async function listCitas({ desde, hasta, medicoId, sedeId, consultorioId, estado, pacienteId } = {}) {
   return prisma.cita.findMany({
     where: {
       ...(desde || hasta
@@ -54,6 +54,7 @@ async function listCitas({ desde, hasta, medicoId, sedeId, consultorioId, estado
       ...(sedeId ? { sedeId } : {}),
       ...(consultorioId ? { consultorioId } : {}),
       ...(estado ? { estado } : {}),
+      ...(pacienteId ? { pacienteId } : {}),
     },
     include: citaInclude,
     orderBy: { inicio: 'asc' },

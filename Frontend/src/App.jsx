@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/layout/AppLayout';
 import { sidebarItems } from './components/layout/sidebarConfig';
+import AdmisionesPage from './pages/AdmisionesPage';
 import AgendaPage from './pages/AgendaPage';
 import ComingSoonPage from './pages/ComingSoonPage';
 import PacienteFormPage from './pages/PacienteFormPage';
@@ -8,7 +9,7 @@ import PacientePerfilPage from './pages/PacientePerfilPage';
 import PacientesListPage from './pages/PacientesListPage';
 import UserFormPage from './pages/UserFormPage';
 
-const IMPLEMENTED_PATHS = ['/usuarios', '/pacientes', '/agenda'];
+const IMPLEMENTED_PATHS = ['/usuarios', '/pacientes', '/agenda', '/admisiones'];
 
 function flattenComingSoonPaths() {
   const paths = [];
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/pacientes/:id" element={<PacientePerfilPage />} />
         <Route path="/pacientes/:id/editar" element={<PacienteFormPage mode="edit" />} />
         <Route path="/agenda" element={<AgendaPage />} />
+        <Route path="/admisiones" element={<AdmisionesPage />} />
         {comingSoonPaths.map((path) => (
           <Route key={path} path={path} element={<ComingSoonPage />} />
         ))}

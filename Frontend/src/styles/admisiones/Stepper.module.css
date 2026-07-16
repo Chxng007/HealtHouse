@@ -1,0 +1,71 @@
+.stepper {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 26px;
+}
+
+.paso {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.paso:last-child {
+  flex: 0;
+}
+
+.circuloWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.circulo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  border: 2px solid var(--border-strong);
+  background: #fff;
+  color: var(--text-placeholder);
+}
+
+.done {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: #fff;
+}
+
+.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-heading);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.labelPendiente {
+  color: var(--text-placeholder);
+}
+
+.linea {
+  flex: 1;
+  height: 2px;
+  background: var(--border-default);
+  margin: 0 4px 20px 4px;
+}
+
+.lineaDone {
+  background: var(--color-success);
+}

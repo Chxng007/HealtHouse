@@ -17,6 +17,10 @@ export function getBreadcrumb(pathname) {
     return { module: 'Agenda Médica', page: null };
   }
 
+  if (pathname.startsWith('/admisiones')) {
+    return { module: 'Admisiones', page: 'Nueva Admisión' };
+  }
+
   for (const item of sidebarItems) {
     if (item.children) {
       const child = item.children.find((c) => pathname.startsWith(c.path));
