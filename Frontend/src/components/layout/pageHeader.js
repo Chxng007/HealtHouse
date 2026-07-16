@@ -13,6 +13,10 @@ export function getBreadcrumb(pathname) {
     return { module: 'Gestión de Pacientes', page };
   }
 
+  if (pathname.startsWith('/agenda')) {
+    return { module: 'Agenda Médica', page: null };
+  }
+
   for (const item of sidebarItems) {
     if (item.children) {
       const child = item.children.find((c) => pathname.startsWith(c.path));

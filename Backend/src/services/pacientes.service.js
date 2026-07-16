@@ -79,13 +79,21 @@ async function getStats() {
   inicioMes.setDate(1);
   inicioMes.setHours(0, 0, 0, 0);
 
-  const [total, nuevosMes] = await prisma.$transaction([
+  const inicioHoy = new Date();
+  inicioHoy.setHours(0, 0, 0, 0);
+  const finHoy = new Date(inicioHoy);
+  finHoy.setDate(finHoy.getDate() + 1);
+
+  const [total, nuevosMes, citasHoy] = await prisma.$transaction([
     prisma.paciente.count(),
     prisma.paciente.count({ where: { createdAt: { gte: inicioMes } } }),
+    prisma.cita.count({
+      where: { inicio: { gte: inicioHoy, lt: finHoy }, estado: { notIn: ['cancelada'] } },
+    }),
   ]);
 
-  // Citas de hoy y atenciones de la semana se completan cuando existan esos módulos (Fases 2 y 4).
-  return { total, nuevosMes, citasHoy: 0, atencionesSemana: 0 };
+  // Atenciones de la semana se completa cuando exista el módulo de HCE (Fase 4).
+  return { total, nuevosMes, citasHoy, atencionesSemana: 0 };
 }
 
 async function createPaciente(data, fotoUrl) {

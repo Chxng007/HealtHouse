@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const { EPS } = require('./seedData/eps');
 const { PACIENTES } = require('./seedData/pacientes');
+const { ESPECIALIDADES, CONSULTORIOS, MEDICOS } = require('./seedData/agenda');
 
 const prisma = new PrismaClient();
 
@@ -98,6 +99,114 @@ async function main() {
     });
   }
   console.log(`Pacientes demo sembrados: ${PACIENTES.length}`);
+
+  for (const nombre of ESPECIALIDADES) {
+    await prisma.especialidad.upsert({ where: { nombre }, update: {}, create: { nombre } });
+  }
+  console.log(`Especialidades sembradas: ${ESPECIALIDADES.length}`);
+
+  const passwordMedico = await bcrypt.hash('Demo12345', 10);
+  for (const medico of MEDICOS) {
+    const { rolSlug, ...datos } = medico;
+    const rol = await prisma.role.findUniqueOrThrow({ where: { slug: rolSlug } });
+    await prisma.user.upsert({
+      where: { correo: medico.correo },
+      update: {},
+      create: {
+        ...datos,
+        rolId: rol.id,
+        activo: true,
+        mustChangePassword: true,
+        passwordHash: passwordMedico,
+        sedes: { create: [{ sedeId: sedePrincipal.id }] },
+        permisos: {
+          create: ['pacientes', 'historia_clinica', 'agenda', 'formulas_ordenes'].map((modulo) => ({
+            modulo,
+            ver: true,
+            crear: true,
+            editar: true,
+            imprimir: true,
+          })),
+        },
+      },
+    });
+  }
+  console.log(`Médicos demo sembrados: ${MEDICOS.length} (torres/vargas@healthhouse.co / Demo12345)`);
+
+  for (const consultorio of CONSULTORIOS) {
+    const sede = await prisma.sede.findFirstOrThrow({ where: { nombre: consultorio.sedeNombre } });
+    const especialidad = await prisma.especialidad.findUniqueOrThrow({ where: { nombre: consultorio.especialidad } });
+    const medico = consultorio.medicoCorreo
+      ? await prisma.user.findUniqueOrThrow({ where: { correo: consultorio.medicoCorreo } })
+      : null;
+    const existente = await prisma.consultorio.findFirst({
+      where: { nombre: consultorio.nombre, sedeId: sede.id },
+    });
+    if (!existente) {
+      await prisma.consultorio.create({
+        data: {
+          nombre: consultorio.nombre,
+          sedeId: sede.id,
+          especialidadId: especialidad.id,
+          medicoId: medico?.id ?? null,
+        },
+      });
+    }
+  }
+  console.log(`Consultorios sembrados: ${CONSULTORIOS.length}`);
+
+  // Citas demo: solo si la tabla está vacía (idempotencia simple, las fechas son relativas a hoy).
+  const citasExistentes = await prisma.cita.count();
+  if (citasExistentes === 0) {
+    const torres = await prisma.user.findUniqueOrThrow({ where: { correo: 'torres@healthhouse.co' } });
+    const vargas = await prisma.user.findUniqueOrThrow({ where: { correo: 'vargas@healthhouse.co' } });
+    const consultorio1 = await prisma.consultorio.findFirstOrThrow({
+      where: { nombre: 'Consultorio 1', sedeId: sedePrincipal.id },
+    });
+    const consultorio2 = await prisma.consultorio.findFirstOrThrow({
+      where: { nombre: 'Consultorio 2', sedeId: sedePrincipal.id },
+    });
+    const pacientesDemo = await prisma.paciente.findMany({ orderBy: { apellidos: 'asc' }, take: 6 });
+
+    const enDia = (offsetDias, hora, minutos = 0) => {
+      const fecha = new Date();
+      fecha.setDate(fecha.getDate() + offsetDias);
+      fecha.setHours(hora, minutos, 0, 0);
+      return fecha;
+    };
+    const media = (fecha) => new Date(fecha.getTime() + 30 * 60 * 1000);
+
+    const citasDemo = [
+      { paciente: 0, medico: torres, consultorio: consultorio2, inicio: enDia(0, 9), estado: 'confirmada', motivo: 'Consulta psicología' },
+      { paciente: 1, medico: vargas, consultorio: consultorio1, inicio: enDia(0, 10, 30), estado: 'en_atencion', motivo: 'Consulta general' },
+      { paciente: 2, medico: torres, consultorio: consultorio2, inicio: enDia(0, 11, 15), estado: 'atendida', motivo: 'Seguimiento' },
+      { paciente: 3, medico: vargas, consultorio: consultorio1, inicio: enDia(0, 14), estado: 'agendada', motivo: 'Control' },
+      { paciente: 4, medico: torres, consultorio: consultorio2, inicio: enDia(1, 8), estado: 'agendada', motivo: 'Primera vez' },
+      { paciente: 5, medico: vargas, consultorio: consultorio1, inicio: enDia(1, 9, 30), estado: 'agendada', motivo: 'Control tensión' },
+      { paciente: 0, medico: vargas, consultorio: consultorio1, inicio: enDia(2, 11), estado: 'agendada', motivo: 'Chequeo general' },
+      { paciente: 2, medico: torres, consultorio: consultorio2, inicio: enDia(-1, 15), estado: 'no_asistio', motivo: 'Terapia' },
+      { paciente: 1, medico: torres, consultorio: consultorio2, inicio: enDia(3, 10), estado: 'cancelada', motivo: 'Terapia', motivoCancelacion: 'El paciente viajó' },
+    ];
+
+    for (const cita of citasDemo) {
+      await prisma.cita.create({
+        data: {
+          pacienteId: pacientesDemo[cita.paciente].id,
+          medicoId: cita.medico.id,
+          consultorioId: cita.consultorio.id,
+          sedeId: sedePrincipal.id,
+          inicio: cita.inicio,
+          fin: media(cita.inicio),
+          estado: cita.estado,
+          motivo: cita.motivo,
+          motivoCancelacion: cita.motivoCancelacion,
+        },
+      });
+    }
+    console.log(`Citas demo sembradas: ${citasDemo.length}`);
+  } else {
+    console.log(`Citas demo omitidas (ya existen ${citasExistentes}).`);
+  }
 }
 
 main()

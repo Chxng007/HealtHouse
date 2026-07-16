@@ -29,6 +29,12 @@ function errorHandler(err, req, res, next) {
     }
   }
 
+  // Violación de constraint de exclusión (23P01, anti-solape de citas). Prisma no la
+  // tipifica con un código propio, así que se detecta por el nombre de la constraint.
+  if (typeof err.message === 'string' && (err.message.includes('sin_solape') || err.message.includes('23P01'))) {
+    return res.status(409).json({ error: 'Horario no disponible: el médico o el consultorio ya tienen una cita en esa franja.' });
+  }
+
   if (err.status) {
     return res.status(err.status).json({ error: err.message });
   }

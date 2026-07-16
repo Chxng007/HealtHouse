@@ -35,6 +35,26 @@
   --color-pink: #db2777;
   --color-pink-bg: #fce7f3;
 
+  /* Estados de cita (leyenda y chips del calendario, colores del mockup Agenda) */
+  --cita-agendada-bg: #f1f5f9;
+  --cita-agendada-border: #94a3b8;
+  --cita-agendada-text: #475569;
+  --cita-confirmada-bg: #eaf1ff;
+  --cita-confirmada-border: #2563eb;
+  --cita-confirmada-text: #1d4ed8;
+  --cita-en_atencion-bg: #fef3c7;
+  --cita-en_atencion-border: #f59e0b;
+  --cita-en_atencion-text: #92400e;
+  --cita-atendida-bg: #dcfce7;
+  --cita-atendida-border: #22c55e;
+  --cita-atendida-text: #15803d;
+  --cita-cancelada-bg: #fee2e2;
+  --cita-cancelada-border: #ef4444;
+  --cita-cancelada-text: #b91c1c;
+  --cita-no_asistio-bg: #f5f5f4;
+  --cita-no_asistio-border: #78716c;
+  --cita-no_asistio-text: #57534e;
+
   --color-bg-page: #eef1f7;
   --color-bg-surface: #ffffff;
   --color-bg-muted: #f4f6fb;

@@ -22,3 +22,5 @@ export const apiGet = (path) => request(path);
 export const apiPostForm = (path, formData) => request(path, { method: 'POST', body: formData, isFormData: true });
 export const apiPutForm = (path, formData) => request(path, { method: 'PUT', body: formData, isFormData: true });
 export const apiPatchJson = (path, body) => request(path, { method: 'PATCH', body });
+export const apiPostJson = (path, body) => request(path, { method: 'POST', body });
+export const apiPutJson = (path, body) => request(path, { method: 'PUT', body });

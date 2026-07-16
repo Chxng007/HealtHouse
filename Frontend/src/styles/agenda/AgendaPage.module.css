@@ -1,0 +1,191 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
+}
+
+.calendario {
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eef1f7;
+  flex-wrap: wrap;
+}
+
+.navBtns {
+  display: flex;
+  gap: 6px;
+}
+
+.navBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+.navBtn:hover {
+  background: var(--color-bg-muted);
+}
+
+.rangoLabel {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text-heading);
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.vistaToggle {
+  display: flex;
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-md);
+  padding: 3px;
+}
+
+.vistaBtn {
+  border: none;
+  background: transparent;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+
+.vistaActiva {
+  font-weight: 800;
+  background: #fff;
+  color: var(--color-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.medicoSelect {
+  position: relative;
+  width: 180px;
+}
+
+.medicoSelect select {
+  padding: 8px 28px 8px 12px;
+  font-size: 13px;
+}
+
+.selectChevron {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.error {
+  padding: 12px 20px;
+  color: var(--color-danger-dark);
+  background: var(--color-danger-bg);
+  font-size: 13px;
+}
+
+.panelLateral {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.panelCard {
+  padding: 18px;
+}
+
+.panelTitulo {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--text-heading);
+  margin-bottom: 12px;
+}
+
+.leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.leyendaItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leyendaColor {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.leyenda_agendada { background: var(--cita-agendada-border); }
+.leyenda_confirmada { background: var(--cita-confirmada-border); }
+.leyenda_en_atencion { background: var(--cita-en_atencion-border); }
+.leyenda_atendida { background: var(--cita-atendida-border); }
+.leyenda_cancelada { background: var(--cita-cancelada-border); }
+.leyenda_no_asistio { background: var(--cita-no_asistio-border); }
+
+.leyendaLabel {
+  font-size: 13px;
+  color: var(--text-label);
+  font-weight: 600;
+}
+
+.citasHoy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.citaHoyItem {
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  padding: 0 0 0 10px;
+  border-left: 3px solid var(--border-strong);
+  cursor: pointer;
+}
+
+.borde_agendada { border-left-color: var(--cita-agendada-border); }
+.borde_confirmada { border-left-color: var(--cita-confirmada-border); }
+.borde_en_atencion { border-left-color: var(--cita-en_atencion-border); }
+.borde_atendida { border-left-color: var(--cita-atendida-border); }
+.borde_cancelada { border-left-color: var(--cita-cancelada-border); }
+.borde_no_asistio { border-left-color: var(--cita-no_asistio-border); }
+
+.citaHoyTitulo {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.citaHoySub {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.sinCitas {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}

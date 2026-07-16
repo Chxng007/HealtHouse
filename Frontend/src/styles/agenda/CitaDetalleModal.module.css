@@ -1,0 +1,108 @@
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.paciente {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.documento {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+}
+
+.campoLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+.campoValor {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.campoSub {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.notaCancelacion,
+.notaReprogramacion {
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.notaCancelacion {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-dark);
+}
+
+.notaReprogramacion {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.formInline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.gridReprogramar {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 10px;
+}
+
+.accionesInline {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border-default);
+  padding-top: 14px;
+}
+
+.error {
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}

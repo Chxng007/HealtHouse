@@ -56,6 +56,26 @@ enum Zona {
   rural
 }
 
+enum EstadoCita {
+  agendada
+  confirmada
+  en_atencion
+  atendida
+  cancelada
+  no_asistio
+}
+
+enum CanalRecordatorio {
+  sms
+  email
+}
+
+enum EstadoRecordatorio {
+  pendiente
+  enviado_stub
+  fallido
+}
+
 enum ModuloPermiso {
   pacientes
   historia_clinica
@@ -88,6 +108,8 @@ model Sede {
   updatedAt   DateTime   @updatedAt
   usuarios    UserSede[]
   pacientesRegistrados Paciente[]
+  consultorios Consultorio[]
+  citas        Cita[]
 
   @@map("sedes")
 }
@@ -133,6 +155,7 @@ model Paciente {
   updatedAt       DateTime        @updatedAt
 
   contactos ContactoEmergencia[]
+  citas     Cita[]
 
   @@index([apellidos, nombres])
   @@map("pacientes")
@@ -148,6 +171,78 @@ model ContactoEmergencia {
   direccion  String?
 
   @@map("contactos_emergencia")
+}
+
+model Especialidad {
+  id           String        @id @default(cuid())
+  nombre       String        @unique
+  activa       Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  consultorios Consultorio[]
+
+  @@map("especialidades")
+}
+
+model Consultorio {
+  id             String        @id @default(cuid())
+  nombre         String
+  sedeId         String
+  sede           Sede          @relation(fields: [sedeId], references: [id])
+  especialidadId String?
+  especialidad   Especialidad? @relation(fields: [especialidadId], references: [id])
+  medicoId       String?
+  medico         User?         @relation("ConsultorioMedico", fields: [medicoId], references: [id])
+  activo         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  citas          Cita[]
+
+  @@map("consultorios")
+}
+
+model Cita {
+  id                   String     @id @default(cuid())
+  pacienteId           String
+  paciente             Paciente   @relation(fields: [pacienteId], references: [id])
+  medicoId             String
+  medico               User       @relation("CitasMedico", fields: [medicoId], references: [id])
+  consultorioId        String
+  consultorio          Consultorio @relation(fields: [consultorioId], references: [id])
+  sedeId               String
+  sede                 Sede       @relation(fields: [sedeId], references: [id])
+  inicio               DateTime
+  fin                  DateTime
+  estado               EstadoCita @default(agendada)
+  motivo               String?
+  notas                String?
+  motivoCancelacion    String?
+  motivoReprogramacion String?
+  reprogramadaDeId     String?    @unique
+  reprogramadaDe       Cita?      @relation("Reprogramacion", fields: [reprogramadaDeId], references: [id])
+  reprogramadaA        Cita?      @relation("Reprogramacion")
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  recordatorios Recordatorio[]
+
+  @@index([medicoId, inicio])
+  @@index([consultorioId, inicio])
+  @@index([sedeId, inicio])
+  @@map("citas")
+}
+
+model Recordatorio {
+  id             String             @id @default(cuid())
+  citaId         String
+  cita           Cita               @relation(fields: [citaId], references: [id], onDelete: Cascade)
+  canal          CanalRecordatorio
+  estado         EstadoRecordatorio @default(pendiente)
+  programadoPara DateTime
+  enviadoAt      DateTime?
+  detalle        Json?
+
+  @@map("recordatorios")
 }
 
 model User {
@@ -172,6 +267,8 @@ model User {
 
   sedes    UserSede[]
   permisos UserPermission[]
+  consultoriosAsignados Consultorio[] @relation("ConsultorioMedico")
+  citasComoMedico       Cita[]        @relation("CitasMedico")
 
   @@map("users")
 }

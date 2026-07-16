@@ -1,0 +1,61 @@
+.headerRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dowHeader {
+  padding: 10px 8px;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-placeholder);
+  border-bottom: 1px solid #eef1f7;
+  border-right: 1px solid #eef1f7;
+}
+
+.semanaRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.celdaDia {
+  min-height: 104px;
+  padding: 6px;
+  border-bottom: 1px solid #eef1f7;
+  border-right: 1px solid #eef1f7;
+  cursor: pointer;
+}
+.celdaDia:hover {
+  background: var(--color-bg-subtle);
+}
+
+.otroMes {
+  background: var(--color-bg-subtle);
+}
+.otroMes .numDia {
+  color: var(--text-placeholder);
+}
+
+.numDia {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-label);
+  margin-bottom: 4px;
+}
+
+.hoy {
+  color: var(--color-primary);
+}
+
+.chips {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.masChip {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  padding-left: 6px;
+}
