@@ -89,6 +89,23 @@ enum EstadoAdmision {
   cancelado
 }
 
+enum EstadoAtencion {
+  en_curso
+  cerrada
+  anulada
+}
+
+enum TipoDiagnostico {
+  principal
+  secundario
+  complicacion
+}
+
+enum CondicionDiagnostico {
+  confirmado
+  impresion_diagnostica
+}
+
 enum ModuloPermiso {
   pacientes
   historia_clinica
@@ -124,6 +141,7 @@ model Sede {
   consultorios Consultorio[]
   citas        Cita[]
   admisiones   Admision[]
+  atenciones   Atencion[]
 
   @@map("sedes")
 }
@@ -172,6 +190,7 @@ model Paciente {
   contactos  ContactoEmergencia[]
   citas      Cita[]
   admisiones Admision[]
+  atenciones Atencion[]
 
   @@index([apellidos, nombres])
   @@map("pacientes")
@@ -271,8 +290,83 @@ model Admision {
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
 
+  atencion Atencion?
+
   @@index([sedeId, horaLlegada])
   @@map("admisiones")
+}
+
+model Cie10 {
+  id          String  @id @default(cuid())
+  codigo      String  @unique
+  descripcion String
+  activo      Boolean @default(true)
+
+  diagnosticos AtencionDiagnostico[]
+
+  @@map("cie10")
+}
+
+model Atencion {
+  id                        String         @id @default(cuid())
+  pacienteId                String
+  paciente                  Paciente       @relation(fields: [pacienteId], references: [id])
+  admisionId                String?        @unique
+  admision                  Admision?      @relation(fields: [admisionId], references: [id])
+  medicoId                  String
+  medico                    User           @relation("AtencionesMedico", fields: [medicoId], references: [id])
+  sedeId                    String
+  sede                      Sede           @relation(fields: [sedeId], references: [id])
+  fecha                     DateTime       @default(now())
+  motivoConsulta            String
+  enfermedadActual          String?
+  antecedentesPersonales    String?
+  antecedentesFamiliares    String?
+  antecedentesFarmacologicos String?
+  examenFisico              String?
+  planManejo                String?
+  estado                    EstadoAtencion @default(en_curso)
+  cerradaAt                 DateTime?
+  anuladaMotivo             String?
+  anuladaAt                 DateTime?
+  createdAt                 DateTime       @default(now())
+  updatedAt                 DateTime       @updatedAt
+
+  signosVitales SignosVitales?
+  diagnosticos  AtencionDiagnostico[]
+
+  @@index([pacienteId, fecha])
+  @@map("atenciones")
+}
+
+model SignosVitales {
+  id           String   @id @default(cuid())
+  atencionId   String   @unique
+  atencion     Atencion @relation(fields: [atencionId], references: [id], onDelete: Cascade)
+  taSistolica  Int?
+  taDiastolica Int?
+  fc           Int?
+  fr           Int?
+  temperatura  Decimal? @db.Decimal(4, 1)
+  peso         Decimal? @db.Decimal(5, 2)
+  talla        Decimal? @db.Decimal(5, 2)
+  imc          Decimal? @db.Decimal(4, 1)
+  spo2         Int?
+
+  @@map("signos_vitales")
+}
+
+model AtencionDiagnostico {
+  id         String               @id @default(cuid())
+  atencionId String
+  atencion   Atencion             @relation(fields: [atencionId], references: [id], onDelete: Cascade)
+  cie10Id    String
+  cie10      Cie10                @relation(fields: [cie10Id], references: [id])
+  tipo       TipoDiagnostico
+  condicion  CondicionDiagnostico
+
+  @@unique([atencionId, cie10Id])
+  @@map("atencion_diagnosticos")
 }
 
 model Recordatorio {
@@ -313,6 +407,7 @@ model User {
   consultoriosAsignados Consultorio[] @relation("ConsultorioMedico")
   citasComoMedico       Cita[]        @relation("CitasMedico")
   admisionesComoMedico  Admision[]    @relation("AdmisionesMedico")
+  atencionesComoMedico  Atencion[]    @relation("AtencionesMedico")
 
   @@map("users")
 }

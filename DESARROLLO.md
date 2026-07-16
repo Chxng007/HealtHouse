@@ -61,6 +61,15 @@ Plan aprobado para implementar los 16 mockups restantes del proyecto Claude Desi
 - [x] **Frontend** (fiel a `Admisiones.dc.html`): `Stepper` de 5 pasos con estados done/activo/pendiente y líneas de progreso; `AdmisionWizard` — Paso 1 Verificación (SearchSelect de paciente + datos + link "Corregir datos" + origen cita-de-hoy/walk-in con radio, cita única autoseleccionada), Paso 2 Tipo de Atención + sede + observaciones, Paso 3 Autorización EPS (nro + copago, textos del mockup), Paso 4 Médico (prellenado desde la cita), Paso 5 Confirmación con resumen; al confirmar → banner de éxito y reset. Panel lateral: "Paciente Verificado" (aparece al seleccionar) y "Lista de Espera" (badge amarillo con contador, posición numerada, minutos de espera). Debajo del wizard: tabla "Admisiones de Hoy" (DataTable con llegada/paciente/tipo/médico/origen/estado badge/acciones de la máquina de estados; cancelar pasa por ConfirmDialog). Ruta `/admisiones`.
 - [x] **Verificación:** smoke API 15 checks (admisión desde cita, cita→confirmada, snapshot EPS, doble admisión→409, paciente inactivo→409, cita cruzada→409, walk-in, lista de espera ordenada, sincronización cita en cada transición, transición inválida→409, cancelación) + E2E Playwright 20 checks (wizard completo de 5 pasos con paciente real, autorización, resumen, admisión → lista de espera → Iniciar Atención → Atendido, badges actualizándose). **Cero errores de consola.** Lint + build limpios. Datos demo restaurados.
 
+### 2026-07-16 — Fase 4 (Historia Clínica) — PARCIAL
+
+- [x] Mockup `Historia Clinica.dc.html` leído (estructura documentada en `docs/HANDOFF.md`).
+- [x] **Migración `historia_clinica` aplicada:** modelos `Cie10`, `Atencion` (desde admisión opcional `admisionId @unique`, motivo/anamnesis/antecedentes/examen/plan, estado `en_curso|cerrada|anulada`, sellos `cerradaAt`/`anuladaAt`), `SignosVitales` (1:1 cascade, TA/FC/FR/temp/peso/talla/IMC/SpO2), `AtencionDiagnostico` (cie10 + tipo principal/secundario/complicación + condición confirmado/impresión, `@@unique([atencionId, cie10Id])`).
+- [x] Seed: **80 códigos CIE-10** representativos (`prisma/seedData/cie10.js`, upsert por código listo para catálogo completo).
+- [ ] **PENDIENTE:** backend (service con `assertEditable`, cerrar/anular, trazabilidad desde audit_logs, ruta `/api/cie10?search=`), frontend (`/historia-clinica` timeline + `/historia-clinica/atencion/:id` con las secciones del mockup), conectar historial del perfil de paciente + KPI atenciones + "Última Atención", verificación. **Detalle paso a paso en `docs/HANDOFF.md`.**
+
+> **Para retomar en otra máquina:** ver `docs/HANDOFF.md` (setup completo, estado, pendientes) y `docs/PLAN-IMPLEMENTACION.md` (plan aprobado de las 10 fases).
+
 ## Cómo levantar el proyecto
 
 ```bash

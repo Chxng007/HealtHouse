@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const { EPS } = require('./seedData/eps');
 const { PACIENTES } = require('./seedData/pacientes');
 const { ESPECIALIDADES, CONSULTORIOS, MEDICOS } = require('./seedData/agenda');
+const { CIE10 } = require('./seedData/cie10');
 
 const prisma = new PrismaClient();
 
@@ -104,6 +105,11 @@ async function main() {
     await prisma.especialidad.upsert({ where: { nombre }, update: {}, create: { nombre } });
   }
   console.log(`Especialidades sembradas: ${ESPECIALIDADES.length}`);
+
+  for (const item of CIE10) {
+    await prisma.cie10.upsert({ where: { codigo: item.codigo }, update: { descripcion: item.descripcion }, create: item });
+  }
+  console.log(`Códigos CIE-10 sembrados: ${CIE10.length}`);
 
   const passwordMedico = await bcrypt.hash('Demo12345', 10);
   for (const medico of MEDICOS) {
