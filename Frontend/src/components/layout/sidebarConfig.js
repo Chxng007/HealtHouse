@@ -12,7 +12,7 @@ export const sidebarItems = [
     icon: 'admin_panel_settings',
     label: 'Administración',
     children: [
-      { label: 'Usuarios', path: '/usuarios/nuevo' },
+      { label: 'Usuarios', path: '/usuarios' },
       { label: 'Roles y Permisos', path: '/administracion/roles-permisos' },
       { label: 'Sedes y Consultorios', path: '/administracion/sedes-consultorios' },
       { label: 'Parametrización', path: '/administracion/parametrizacion' },

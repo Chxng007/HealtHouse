@@ -1,0 +1,202 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cargando,
+.error {
+  padding: 24px;
+  color: var(--text-tertiary);
+}
+
+.saludo {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.fecha {
+  font-size: 13.5px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.kpisGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.kpiCard {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kpiIcono {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tonePrimary { background: var(--color-primary-bg); color: var(--color-primary); }
+.toneSuccess { background: var(--color-success-bg); color: var(--color-success-dark); }
+.toneAmber { background: var(--color-warning-bg); color: var(--color-amber); }
+.tonePink { background: var(--color-pink-bg); color: var(--color-pink); }
+
+.kpiValor {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-heading);
+  line-height: 1;
+}
+
+.kpiLabel {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.seccionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.seccionTitulo {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+}
+
+.verMas {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.vacio {
+  padding: 20px 22px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+.citaFila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 22px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.citaHora {
+  width: 52px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.citaInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.citaPaciente {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.citaSub {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.accesosTitulo {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+  margin-bottom: 14px;
+}
+
+.accesosGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.accesoCard {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  text-decoration: none;
+}
+.accesoCard:hover {
+  border-color: var(--color-primary);
+  background: #f8faff;
+}
+
+.accesoIcono {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accesoLabel {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--text-label);
+}
+
+.actividadFila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 22px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.actividadTexto {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-label);
+  text-transform: capitalize;
+}
+
+.actividadTiempo {
+  font-size: 12px;
+  color: var(--text-placeholder);
+}
+
+@media (max-width: 1100px) {
+  .kpisGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .main {
+    grid-template-columns: 1fr;
+  }
+}

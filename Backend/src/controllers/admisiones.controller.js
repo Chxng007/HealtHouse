@@ -9,7 +9,11 @@ function invalido(res, parsed) {
 
 async function listAdmisiones(req, res, next) {
   try {
-    res.json(await admisionesService.listAdmisiones({ sedeId: req.query.sedeId, estado: req.query.estado }));
+    res.json(await admisionesService.listAdmisiones({
+      sedeId: req.query.sedeId,
+      estado: req.query.estado,
+      pacienteId: req.query.pacienteId,
+    }));
   } catch (err) {
     next(err);
   }

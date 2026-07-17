@@ -4,6 +4,9 @@ const { EPS } = require('./seedData/eps');
 const { PACIENTES } = require('./seedData/pacientes');
 const { ESPECIALIDADES, CONSULTORIOS, MEDICOS } = require('./seedData/agenda');
 const { CIE10 } = require('./seedData/cie10');
+const { CUPS } = require('./seedData/cups');
+const { SERVICIOS, CONVENIOS, NUMERACIONES, CONFIGURACION_IPS } = require('./seedData/facturacion');
+const { CONFIGURACIONES_GENERALES } = require('./seedData/configuracion');
 
 const prisma = new PrismaClient();
 
@@ -110,6 +113,64 @@ async function main() {
     await prisma.cie10.upsert({ where: { codigo: item.codigo }, update: { descripcion: item.descripcion }, create: item });
   }
   console.log(`Códigos CIE-10 sembrados: ${CIE10.length}`);
+
+  for (const item of CUPS) {
+    await prisma.cups.upsert({ where: { codigo: item.codigo }, update: { nombre: item.nombre }, create: item });
+  }
+  console.log(`Códigos CUPS sembrados: ${CUPS.length}`);
+
+  for (const servicio of SERVICIOS) {
+    await prisma.servicio.upsert({
+      where: { codigo: servicio.codigo },
+      update: { nombre: servicio.nombre, valorBase: servicio.valorBase },
+      create: servicio,
+    });
+  }
+  console.log(`Servicios facturables sembrados: ${SERVICIOS.length}`);
+
+  const FACTOR_TARIFA = { evento: 1, capitacion: 0.6, paquete: 0.8 };
+  const FACTOR_COPAGO = { evento: 0.05, capitacion: 0, paquete: 0.02 };
+  const redondear500 = (n) => Math.round(n / 500) * 500;
+
+  const serviciosDb = await prisma.servicio.findMany();
+  for (const conv of CONVENIOS) {
+    const eps = await prisma.eps.findUniqueOrThrow({ where: { nombre: conv.epsNombre } });
+    const convenio = await prisma.convenio.upsert({
+      where: { epsId_tipoContrato: { epsId: eps.id, tipoContrato: conv.tipoContrato } },
+      update: {},
+      create: { epsId: eps.id, tipoContrato: conv.tipoContrato },
+    });
+    for (const servicio of serviciosDb) {
+      await prisma.tarifa.upsert({
+        where: { convenioId_servicioId: { convenioId: convenio.id, servicioId: servicio.id } },
+        update: {},
+        create: {
+          convenioId: convenio.id,
+          servicioId: servicio.id,
+          valor: redondear500(Number(servicio.valorBase) * FACTOR_TARIFA[conv.tipoContrato]),
+          copago: redondear500(Number(servicio.valorBase) * FACTOR_COPAGO[conv.tipoContrato]),
+        },
+      });
+    }
+  }
+  console.log(`Convenios sembrados: ${CONVENIOS.length} (con tarifas para los ${serviciosDb.length} servicios)`);
+
+  for (const num of NUMERACIONES) {
+    await prisma.numeracionFactura.upsert({ where: { prefijo: num.prefijo }, update: {}, create: num });
+  }
+  console.log(`Numeraciones de facturación sembradas: ${NUMERACIONES.map((n) => n.prefijo).join(', ')}`);
+
+  await prisma.configuracion.upsert({
+    where: { clave: CONFIGURACION_IPS.clave },
+    update: {},
+    create: CONFIGURACION_IPS,
+  });
+  console.log('Configuración de datos IPS sembrada.');
+
+  for (const config of CONFIGURACIONES_GENERALES) {
+    await prisma.configuracion.upsert({ where: { clave: config.clave }, update: {}, create: config });
+  }
+  console.log(`Configuraciones generales sembradas: ${CONFIGURACIONES_GENERALES.map((c) => c.clave).join(', ')}`);
 
   const passwordMedico = await bcrypt.hash('Demo12345', 10);
   for (const medico of MEDICOS) {

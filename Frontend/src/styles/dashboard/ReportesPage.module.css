@@ -1,0 +1,213 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cargando,
+.error {
+  padding: 24px;
+  color: var(--text-tertiary);
+}
+
+.toolbar {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.printArea {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kpisGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.kpiCard {
+  padding: 18px 20px;
+}
+
+.kpiHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.kpiLabel {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.kpiFila {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.kpiValor {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.trendUp {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-success-dark);
+}
+
+.trendDown {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-danger);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.seccionTitulo {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+  margin-bottom: 18px;
+}
+
+.barrasChart {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  height: 180px;
+}
+
+.barraCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.barraTrack {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.barra {
+  width: 100%;
+  background: var(--color-primary);
+  border-radius: 6px 6px 0 0;
+  transition: height 0.2s ease;
+}
+
+.barraLabel {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.productividadLista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vacio {
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+.productividadFila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  margin-bottom: 5px;
+}
+
+.productividadNombre {
+  font-weight: 700;
+  color: var(--text-label);
+}
+
+.productividadValor {
+  color: var(--text-tertiary);
+}
+
+.progresoTrack {
+  background: var(--color-neutral-bg);
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progresoBarra {
+  background: var(--color-primary);
+  height: 100%;
+  border-radius: 6px;
+}
+
+.seccionTituloTabla {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+}
+
+.tablaHeader {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  padding: 10px 24px;
+  background: var(--color-bg-subtle);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.tablaFila {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  padding: 13px 24px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13.5px;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.sedeNombre {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cartera {
+  font-weight: 700;
+  color: var(--color-danger);
+}
+
+@media (max-width: 1100px) {
+  .kpisGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}

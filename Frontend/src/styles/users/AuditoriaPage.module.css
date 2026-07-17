@@ -1,0 +1,68 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.filtrosCard {
+  padding: 18px 22px;
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.error {
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.detalleTexto {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.ip {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--text-placeholder);
+}
+
+.verBtn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.detalleModal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.detalleJson {
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 12px;
+  overflow-x: auto;
+  margin: 6px 0 0 0;
+}

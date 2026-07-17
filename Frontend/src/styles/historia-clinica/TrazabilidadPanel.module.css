@@ -1,0 +1,75 @@
+.panelLateral {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  padding: 18px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.titulo {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--text-heading);
+}
+
+.vacio {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.accion {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.meta {
+  font-size: 11.5px;
+  color: var(--text-placeholder);
+  margin-top: 2px;
+}
+
+.banner {
+  background: var(--color-primary-bg);
+  border: 1px solid #d3e2ff;
+  border-radius: var(--radius-xl);
+  padding: 16px 18px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.bannerTexto {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

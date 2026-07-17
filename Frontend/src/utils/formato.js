@@ -9,3 +9,8 @@ export function formatFecha(fecha) {
   const d = new Date(fecha);
   return d.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' });
 }
+
+export function formatMoneda(valor) {
+  if (valor === null || valor === undefined) return '—';
+  return Number(valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+}

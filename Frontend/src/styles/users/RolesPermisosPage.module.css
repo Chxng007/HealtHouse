@@ -1,0 +1,141 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.rolesGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.rolCard {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  box-shadow: var(--shadow-card);
+}
+
+.rolCardActivo {
+  border: 2px solid var(--color-primary);
+}
+
+.rolHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.rolIcono {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rolLabel {
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--text-heading);
+  line-height: 1.2;
+}
+
+.rolCount {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.matrizHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.matrizTitulo {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+}
+
+.matrizSubtitulo {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.error {
+  margin: 14px 24px 0 24px;
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.exito {
+  margin: 14px 24px 0 24px;
+  background: var(--color-success-bg-soft);
+  border: 1px solid var(--color-success);
+  color: var(--color-success-text);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.tablaHeader {
+  display: grid;
+  grid-template-columns: 1.8fr repeat(6, 1fr);
+  padding: 10px 24px;
+  background: var(--color-bg-subtle);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 14px;
+}
+
+.headerCentrado {
+  text-align: center;
+}
+
+.tablaFila {
+  display: grid;
+  grid-template-columns: 1.8fr repeat(6, 1fr);
+  align-items: center;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.moduloCelda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.moduloLabel {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--text-label);
+}
+
+.checkCelda {
+  text-align: center;
+}
+
+@media (max-width: 1150px) {
+  .rolesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

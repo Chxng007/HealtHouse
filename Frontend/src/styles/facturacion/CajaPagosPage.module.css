@@ -1,0 +1,179 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.error {
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cierreBanner {
+  background: var(--color-success-bg-soft);
+  border: 1px solid var(--color-success);
+  color: var(--color-success-text);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.columnaPrincipal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.metodosGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.metodoHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.metodoLabel {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-label);
+}
+
+.metodoValor {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.pagosHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.pagosTitulo {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+}
+
+.registrarBtn {
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tablaHeader {
+  display: grid;
+  grid-template-columns: 0.8fr 1.4fr 1fr 0.9fr 0.8fr;
+  padding: 10px 22px;
+  background: var(--color-bg-subtle);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.tablaFila {
+  display: grid;
+  grid-template-columns: 0.8fr 1.4fr 1fr 0.9fr 0.8fr;
+  padding: 13px 22px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13.5px;
+  align-items: center;
+}
+
+.vacio {
+  padding: 20px 22px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+.recibo {
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.pacienteNombre {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.valor {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cuadreCard {
+  padding: 20px;
+}
+
+.cuadreTitulo {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-heading);
+  margin-bottom: 14px;
+}
+
+.cuadreFila,
+.cuadreFilaFinal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+}
+
+.cuadreFilaFinal {
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 6px;
+  padding-top: 12px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+@media (max-width: 1100px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .metodosGrid {
+    grid-template-columns: 1fr;
+  }
+}

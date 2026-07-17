@@ -1,0 +1,103 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.statCard {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.statIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tonePrimary { background: var(--color-primary-bg); color: var(--color-primary); }
+.toneAmber { background: var(--color-warning-bg); color: var(--color-amber); }
+.toneDanger { background: var(--color-danger-bg); color: var(--color-danger-dark); }
+.toneSuccess { background: var(--color-success-bg); color: var(--color-success-dark); }
+
+.statValor {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text-heading);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.filtroSelect {
+  width: 190px;
+}
+
+.filtroInput {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-bg-muted);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 9px 14px;
+  flex: 1;
+  max-width: 340px;
+}
+.filtroInput input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  width: 100%;
+  color: var(--text-label);
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.error {
+  margin: 14px 22px 0 22px;
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.verBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-primary);
+}

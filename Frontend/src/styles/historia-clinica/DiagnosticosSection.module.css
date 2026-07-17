@@ -1,0 +1,117 @@
+.section {
+  padding: 0;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px 14px 24px;
+}
+
+.agregarBtn {
+  background: var(--color-primary-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.formAgregar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 0 24px 16px 24px;
+}
+
+.formCie10 {
+  min-width: 0;
+}
+
+.error {
+  margin: 0 24px 12px 24px;
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.tablaHeader {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr 0.8fr 1fr 32px;
+  padding: 10px 24px;
+  background: var(--color-bg-subtle);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.vacio {
+  padding: 20px 24px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr 0.8fr 1fr 32px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13.5px;
+  align-items: center;
+}
+
+.codigo {
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.tipo {
+  color: var(--text-secondary);
+}
+
+.condicion {
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+.success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.neutral {
+  background: var(--color-neutral-bg);
+  color: var(--color-neutral-text);
+}
+
+.quitarBtn {
+  background: none;
+  border: none;
+  color: var(--text-placeholder);
+  cursor: pointer;
+  display: flex;
+  padding: 2px;
+}
+.quitarBtn:hover {
+  color: var(--color-danger);
+}

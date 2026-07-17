@@ -106,6 +106,58 @@ enum CondicionDiagnostico {
   impresion_diagnostica
 }
 
+enum EstadoDocumentoClinico {
+  emitido
+  anulado
+}
+
+enum PrioridadOrden {
+  rutinaria
+  prioritaria
+}
+
+enum EstadoConsentimiento {
+  pendiente
+  firmado
+  anulado
+}
+
+enum TipoContrato {
+  evento
+  capitacion
+  paquete
+}
+
+enum EstadoFactura {
+  borrador
+  emitida
+  pagada
+  anulada
+  en_glosa
+}
+
+enum TipoNotaFactura {
+  credito
+  debito
+}
+
+enum MetodoPago {
+  efectivo
+  tarjeta
+  transferencia
+}
+
+enum EstadoCierreCaja {
+  abierta
+  cerrada
+}
+
+enum EstadoRips {
+  generado
+  validado_ok
+  validado_con_errores
+}
+
 enum ModuloPermiso {
   pacientes
   historia_clinica
@@ -124,24 +176,37 @@ model Role {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User[]
+  permisos  RolePermission[]
 
   @@map("roles")
 }
 
 model Sede {
-  id          String     @id @default(cuid())
-  nombre      String
-  ciudad      String
-  esPrincipal Boolean    @default(false)
-  activa      Boolean    @default(true)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id                 String     @id @default(cuid())
+  nombre             String
+  ciudad             String
+  esPrincipal        Boolean    @default(false)
+  activa             Boolean    @default(true)
+  direccion          String?
+  telefono           String?
+  codigoHabilitacion String?
+  horarios           Json?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
   usuarios    UserSede[]
   pacientesRegistrados Paciente[]
   consultorios Consultorio[]
   citas        Cita[]
   admisiones   Admision[]
   atenciones   Atencion[]
+  formulas       Formula[]
+  ordenes        Orden[]
+  remisiones     Remision[]
+  incapacidades  Incapacidad[]
+  consentimientos Consentimiento[]
+  facturas       Factura[]
+  cierresCaja    CierreCaja[]
+  ripsExports    RipsExport[]
 
   @@map("sedes")
 }
@@ -155,6 +220,7 @@ model Eps {
   updatedAt DateTime   @updatedAt
   pacientes Paciente[]
   admisiones Admision[]
+  convenios Convenio[]
 
   @@map("eps")
 }
@@ -191,6 +257,12 @@ model Paciente {
   citas      Cita[]
   admisiones Admision[]
   atenciones Atencion[]
+  formulas       Formula[]
+  ordenes        Orden[]
+  remisiones     Remision[]
+  incapacidades  Incapacidad[]
+  consentimientos Consentimiento[]
+  facturas       Factura[]
 
   @@index([apellidos, nombres])
   @@map("pacientes")
@@ -210,6 +282,7 @@ model ContactoEmergencia {
 
 model Especialidad {
   id           String        @id @default(cuid())
+  codigo       String?       @unique
   nombre       String        @unique
   activa       Boolean       @default(true)
   createdAt    DateTime      @default(now())
@@ -291,6 +364,7 @@ model Admision {
   updatedAt          DateTime       @updatedAt
 
   atencion Atencion?
+  facturas Factura[]
 
   @@index([sedeId, horaLlegada])
   @@map("admisiones")
@@ -303,6 +377,7 @@ model Cie10 {
   activo      Boolean @default(true)
 
   diagnosticos AtencionDiagnostico[]
+  incapacidades Incapacidad[]
 
   @@map("cie10")
 }
@@ -334,6 +409,11 @@ model Atencion {
 
   signosVitales SignosVitales?
   diagnosticos  AtencionDiagnostico[]
+  formulas       Formula[]
+  ordenes        Orden[]
+  remisiones     Remision[]
+  incapacidades  Incapacidad[]
+  consentimientos Consentimiento[]
 
   @@index([pacienteId, fecha])
   @@map("atenciones")
@@ -408,6 +488,11 @@ model User {
   citasComoMedico       Cita[]        @relation("CitasMedico")
   admisionesComoMedico  Admision[]    @relation("AdmisionesMedico")
   atencionesComoMedico  Atencion[]    @relation("AtencionesMedico")
+  formulasComoMedico        Formula[]        @relation("FormulasMedico")
+  ordenesComoMedico         Orden[]          @relation("OrdenesMedico")
+  remisionesComoMedico      Remision[]       @relation("RemisionesMedico")
+  incapacidadesComoMedico   Incapacidad[]    @relation("IncapacidadesMedico")
+  consentimientosComoMedico Consentimiento[] @relation("ConsentimientosMedico")
 
   @@map("users")
 }
@@ -445,7 +530,345 @@ model AuditLog {
   entidad   String
   entidadId String
   detalle   Json?
+  ip        String?
   createdAt DateTime @default(now())
 
   @@map("audit_logs")
+}
+
+model RolePermission {
+  id       String        @id @default(cuid())
+  rolId    String
+  rol      Role          @relation(fields: [rolId], references: [id], onDelete: Cascade)
+  modulo   ModuloPermiso
+  ver      Boolean       @default(false)
+  crear    Boolean       @default(false)
+  editar   Boolean       @default(false)
+  eliminar Boolean       @default(false)
+  imprimir Boolean       @default(false)
+  exportar Boolean       @default(false)
+
+  @@unique([rolId, modulo])
+  @@map("role_permissions")
+}
+
+model Cups {
+  id         String      @id @default(cuid())
+  codigo     String      @unique
+  nombre     String
+  activo     Boolean     @default(true)
+  ordenItems OrdenItem[]
+
+  @@map("cups")
+}
+
+model Formula {
+  id            String                 @id @default(cuid())
+  pacienteId    String
+  paciente      Paciente               @relation(fields: [pacienteId], references: [id])
+  atencionId    String?
+  atencion      Atencion?              @relation(fields: [atencionId], references: [id])
+  medicoId      String
+  medico        User                   @relation("FormulasMedico", fields: [medicoId], references: [id])
+  sedeId        String
+  sede          Sede                   @relation(fields: [sedeId], references: [id])
+  fecha         DateTime               @default(now())
+  estado        EstadoDocumentoClinico @default(emitido)
+  anuladaMotivo String?
+  anuladaAt     DateTime?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+
+  items FormulaItem[]
+
+  @@index([pacienteId, fecha])
+  @@map("formulas")
+}
+
+model FormulaItem {
+  id          String  @id @default(cuid())
+  formulaId   String
+  formula     Formula @relation(fields: [formulaId], references: [id], onDelete: Cascade)
+  medicamento String
+  dosis       String
+  frecuencia  String
+  duracion    String
+
+  @@map("formula_items")
+}
+
+model Orden {
+  id            String                 @id @default(cuid())
+  pacienteId    String
+  paciente      Paciente               @relation(fields: [pacienteId], references: [id])
+  atencionId    String?
+  atencion      Atencion?              @relation(fields: [atencionId], references: [id])
+  medicoId      String
+  medico        User                   @relation("OrdenesMedico", fields: [medicoId], references: [id])
+  sedeId        String
+  sede          Sede                   @relation(fields: [sedeId], references: [id])
+  fecha         DateTime               @default(now())
+  estado        EstadoDocumentoClinico @default(emitido)
+  anuladaMotivo String?
+  anuladaAt     DateTime?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+
+  items OrdenItem[]
+
+  @@index([pacienteId, fecha])
+  @@map("ordenes")
+}
+
+model OrdenItem {
+  id        String         @id @default(cuid())
+  ordenId   String
+  orden     Orden          @relation(fields: [ordenId], references: [id], onDelete: Cascade)
+  cupsId    String
+  cups      Cups           @relation(fields: [cupsId], references: [id])
+  prioridad PrioridadOrden @default(rutinaria)
+
+  @@map("orden_items")
+}
+
+model Remision {
+  id                  String                 @id @default(cuid())
+  pacienteId          String
+  paciente            Paciente               @relation(fields: [pacienteId], references: [id])
+  atencionId          String?
+  atencion            Atencion?              @relation(fields: [atencionId], references: [id])
+  medicoId            String
+  medico              User                   @relation("RemisionesMedico", fields: [medicoId], references: [id])
+  sedeId              String
+  sede                Sede                   @relation(fields: [sedeId], references: [id])
+  fecha               DateTime               @default(now())
+  especialidadDestino String
+  ipsDestino          String
+  justificacion       String
+  estado              EstadoDocumentoClinico @default(emitido)
+  anuladaMotivo       String?
+  anuladaAt           DateTime?
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+
+  @@index([pacienteId, fecha])
+  @@map("remisiones")
+}
+
+model Incapacidad {
+  id            String                 @id @default(cuid())
+  pacienteId    String
+  paciente      Paciente               @relation(fields: [pacienteId], references: [id])
+  atencionId    String?
+  atencion      Atencion?              @relation(fields: [atencionId], references: [id])
+  medicoId      String
+  medico        User                   @relation("IncapacidadesMedico", fields: [medicoId], references: [id])
+  sedeId        String
+  sede          Sede                   @relation(fields: [sedeId], references: [id])
+  fecha         DateTime               @default(now())
+  cie10Id       String
+  cie10         Cie10                  @relation(fields: [cie10Id], references: [id])
+  numeroDias    Int
+  fechaInicio   DateTime               @db.Date
+  fechaFin      DateTime               @db.Date
+  estado        EstadoDocumentoClinico @default(emitido)
+  anuladaMotivo String?
+  anuladaAt     DateTime?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+
+  @@index([pacienteId, fecha])
+  @@map("incapacidades")
+}
+
+model Consentimiento {
+  id            String               @id @default(cuid())
+  pacienteId    String
+  paciente      Paciente             @relation(fields: [pacienteId], references: [id])
+  atencionId    String?
+  atencion      Atencion?            @relation(fields: [atencionId], references: [id])
+  medicoId      String
+  medico        User                 @relation("ConsentimientosMedico", fields: [medicoId], references: [id])
+  sedeId        String
+  sede          Sede                 @relation(fields: [sedeId], references: [id])
+  fecha         DateTime             @default(now())
+  procedimiento String
+  firmante      String               @default("Paciente")
+  estado        EstadoConsentimiento @default(pendiente)
+  firmaUrl      String?
+  anuladaMotivo String?
+  anuladaAt     DateTime?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@index([pacienteId, fecha])
+  @@map("consentimientos")
+}
+
+model Convenio {
+  id           String       @id @default(cuid())
+  epsId        String
+  eps          Eps          @relation(fields: [epsId], references: [id])
+  tipoContrato TipoContrato
+  activo       Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  tarifas  Tarifa[]
+  facturas Factura[]
+
+  @@unique([epsId, tipoContrato])
+  @@map("convenios")
+}
+
+model Servicio {
+  id        String   @id @default(cuid())
+  codigo    String   @unique
+  nombre    String
+  valorBase Decimal  @db.Decimal(12, 2)
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tarifas      Tarifa[]
+  facturaItems FacturaItem[]
+
+  @@map("servicios")
+}
+
+model Tarifa {
+  id         String   @id @default(cuid())
+  convenioId String
+  convenio   Convenio @relation(fields: [convenioId], references: [id])
+  servicioId String
+  servicio   Servicio @relation(fields: [servicioId], references: [id])
+  valor      Decimal  @db.Decimal(12, 2)
+  copago     Decimal  @db.Decimal(12, 2) @default(0)
+
+  @@unique([convenioId, servicioId])
+  @@map("tarifas")
+}
+
+model NumeracionFactura {
+  id          String  @id @default(cuid())
+  prefijo     String  @unique
+  consecutivo Int     @default(0)
+  rangoDesde  Int     @default(1)
+  rangoHasta  Int     @default(999999)
+  activa      Boolean @default(true)
+
+  @@map("numeraciones_factura")
+}
+
+model Factura {
+  id            String        @id @default(cuid())
+  numero        String?       @unique
+  pacienteId    String
+  paciente      Paciente      @relation(fields: [pacienteId], references: [id])
+  admisionId    String?
+  admision      Admision?     @relation(fields: [admisionId], references: [id])
+  convenioId    String
+  convenio      Convenio      @relation(fields: [convenioId], references: [id])
+  sedeId        String
+  sede          Sede          @relation(fields: [sedeId], references: [id])
+  fecha         DateTime      @default(now())
+  subtotal      Decimal       @db.Decimal(12, 2) @default(0)
+  copago        Decimal       @db.Decimal(12, 2) @default(0)
+  total         Decimal       @db.Decimal(12, 2) @default(0)
+  estado        EstadoFactura @default(borrador)
+  // STUB integración Siigo/DIAN: sin llamado externo real, solo el estado persistido.
+  estadoDian    String        @default("pendiente_emision")
+  anuladaMotivo String?
+  anuladaAt     DateTime?
+  glosaMotivo   String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  items FacturaItem[]
+  notas NotaFactura[]
+  pagos Pago[]
+
+  @@index([pacienteId, fecha])
+  @@map("facturas")
+}
+
+model FacturaItem {
+  id            String   @id @default(cuid())
+  facturaId     String
+  factura       Factura  @relation(fields: [facturaId], references: [id], onDelete: Cascade)
+  servicioId    String
+  servicio      Servicio @relation(fields: [servicioId], references: [id])
+  cantidad      Int      @default(1)
+  valorUnitario Decimal  @db.Decimal(12, 2)
+  valorTotal    Decimal  @db.Decimal(12, 2)
+
+  @@map("factura_items")
+}
+
+model NotaFactura {
+  id        String          @id @default(cuid())
+  facturaId String
+  factura   Factura         @relation(fields: [facturaId], references: [id])
+  tipo      TipoNotaFactura
+  valor     Decimal         @db.Decimal(12, 2)
+  motivo    String
+  createdAt DateTime        @default(now())
+
+  @@map("notas_factura")
+}
+
+model Pago {
+  id           String      @id @default(cuid())
+  facturaId    String
+  factura      Factura     @relation(fields: [facturaId], references: [id])
+  reciboNumero String      @unique
+  metodo       MetodoPago
+  valor        Decimal     @db.Decimal(12, 2)
+  cierreCajaId String?
+  cierreCaja   CierreCaja? @relation(fields: [cierreCajaId], references: [id])
+  createdAt    DateTime    @default(now())
+
+  @@map("pagos")
+}
+
+model CierreCaja {
+  id             String           @id @default(cuid())
+  sedeId         String
+  sede           Sede             @relation(fields: [sedeId], references: [id])
+  fecha          DateTime         @default(now())
+  baseInicial    Decimal          @db.Decimal(12, 2)
+  totalRecaudado Decimal          @db.Decimal(12, 2) @default(0)
+  egresos        Decimal          @db.Decimal(12, 2) @default(0)
+  totalCaja      Decimal          @db.Decimal(12, 2) @default(0)
+  estado         EstadoCierreCaja @default(cerrada)
+  cerradaAt      DateTime?
+  createdAt      DateTime         @default(now())
+
+  pagos Pago[]
+
+  @@map("cierres_caja")
+}
+
+model Configuracion {
+  clave String @id
+  valor Json
+
+  @@map("configuracion")
+}
+
+model RipsExport {
+  id                String     @id @default(cuid())
+  sedeId            String?
+  sede              Sede?      @relation(fields: [sedeId], references: [id])
+  desde             DateTime   @db.Date
+  hasta             DateTime   @db.Date
+  // Estructura fiel a la Res. 2275/2023 (usuarios US, consultas AC, procedimientos AP)
+  // sobre un subconjunto representativo de campos, no el Anexo Técnico completo.
+  contenido         Json
+  totalRegistros    Int        @default(0)
+  erroresValidacion Json
+  estado            EstadoRips @default(generado)
+  createdAt         DateTime   @default(now())
+
+  @@map("rips_exports")
 }

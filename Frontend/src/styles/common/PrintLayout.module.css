@@ -1,0 +1,57 @@
+.hoja {
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.ips {
+  font-weight: 800;
+  color: var(--text-heading);
+  font-size: 13px;
+}
+
+.fecha {
+  font-size: 11.5px;
+}
+
+.paciente {
+  margin-bottom: 10px;
+}
+
+.pacienteNombre {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.titulo {
+  margin-top: 10px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cuerpo {
+  margin-top: 6px;
+}
+
+.firma {
+  margin-top: 14px;
+  font-size: 11.5px;
+}
+
+@media print {
+  .hoja {
+    border: none;
+    padding: 24px;
+    font-size: 13px;
+  }
+}

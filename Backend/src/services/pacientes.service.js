@@ -64,7 +64,21 @@ async function listPacientes({ search, documento, epsId, page = 1, pageSize = 10
     prisma.paciente.count({ where }),
   ]);
 
-  return { data, total, page, pageSize };
+  const ultimasAtenciones = data.length
+    ? await prisma.atencion.groupBy({
+        by: ['pacienteId'],
+        where: { pacienteId: { in: data.map((p) => p.id) }, estado: { not: 'anulada' } },
+        _max: { fecha: true },
+      })
+    : [];
+  const ultimaPorPaciente = new Map(ultimasAtenciones.map((a) => [a.pacienteId, a._max.fecha]));
+
+  return {
+    data: data.map((p) => ({ ...p, ultimaAtencion: ultimaPorPaciente.get(p.id) ?? null })),
+    total,
+    page,
+    pageSize,
+  };
 }
 
 async function getPacienteById(id) {
@@ -84,16 +98,22 @@ async function getStats() {
   const finHoy = new Date(inicioHoy);
   finHoy.setDate(finHoy.getDate() + 1);
 
-  const [total, nuevosMes, citasHoy] = await prisma.$transaction([
+  const inicioSemana = new Date();
+  inicioSemana.setDate(inicioSemana.getDate() - ((inicioSemana.getDay() + 6) % 7));
+  inicioSemana.setHours(0, 0, 0, 0);
+
+  const [total, nuevosMes, citasHoy, atencionesSemana] = await prisma.$transaction([
     prisma.paciente.count(),
     prisma.paciente.count({ where: { createdAt: { gte: inicioMes } } }),
     prisma.cita.count({
       where: { inicio: { gte: inicioHoy, lt: finHoy }, estado: { notIn: ['cancelada'] } },
     }),
+    prisma.atencion.count({
+      where: { fecha: { gte: inicioSemana }, estado: { not: 'anulada' } },
+    }),
   ]);
 
-  // Atenciones de la semana se completa cuando exista el módulo de HCE (Fase 4).
-  return { total, nuevosMes, citasHoy, atencionesSemana: 0 };
+  return { total, nuevosMes, citasHoy, atencionesSemana };
 }
 
 async function createPaciente(data, fotoUrl) {
@@ -128,10 +148,34 @@ async function setEstado(id, activo) {
   });
 }
 
+const TIPO_ATENCION_LABELS = { consulta: 'Consulta', procedimiento: 'Procedimiento', urgencia: 'Urgencia' };
+
 async function getHistorial(id) {
   await prisma.paciente.findUniqueOrThrow({ where: { id }, select: { id: true } });
-  // Se llena con atenciones/facturas reales en las Fases 2-6.
-  return [];
+
+  const atenciones = await prisma.atencion.findMany({
+    where: { pacienteId: id },
+    include: {
+      medico: { select: { nombres: true, apellidos: true } },
+      admision: { select: { tipoAtencion: true } },
+      diagnosticos: { include: { cie10: true } },
+    },
+    orderBy: { fecha: 'desc' },
+  });
+
+  return atenciones.map((a) => {
+    const principal = a.diagnosticos.find((d) => d.tipo === 'principal') ?? a.diagnosticos[0];
+    return {
+      id: a.id,
+      fecha: a.fecha,
+      medico: `${a.medico.nombres} ${a.medico.apellidos}`,
+      tipo: TIPO_ATENCION_LABELS[a.admision?.tipoAtencion] ?? 'Consulta',
+      estado: a.estado,
+      diagnostico: principal ? `${principal.cie10.codigo} - ${principal.cie10.descripcion}` : '—',
+      // La facturación aún no existe (Fase 6); queda null hasta entonces.
+      factura: null,
+    };
+  });
 }
 
 module.exports = {

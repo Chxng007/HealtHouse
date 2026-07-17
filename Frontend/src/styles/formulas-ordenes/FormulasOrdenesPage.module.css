@@ -1,0 +1,29 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.buscadorCard {
+  padding: 20px 22px;
+}
+
+.sinPaciente {
+  padding: 30px;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 13.5px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+}
+
+.tabsCard {
+  padding: 0 8px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}

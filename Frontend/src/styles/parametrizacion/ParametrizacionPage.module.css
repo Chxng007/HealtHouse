@@ -1,0 +1,9 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tabsCard {
+  padding: 0 8px;
+}

@@ -25,6 +25,8 @@ generated/
 # Uploaded files (keep folder structure, ignore contents)
 Backend/uploads/fotos/*
 !Backend/uploads/fotos/.gitkeep
+Backend/uploads/firmas/*
+!Backend/uploads/firmas/.gitkeep
 
 # Logs
 logs

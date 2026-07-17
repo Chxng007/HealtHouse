@@ -1,9 +1,10 @@
 import { apiGet, apiPatchJson, apiPostJson } from './client';
 
-export const listAdmisiones = ({ sedeId, estado } = {}) => {
+export const listAdmisiones = ({ sedeId, estado, pacienteId } = {}) => {
   const params = new URLSearchParams();
   if (sedeId) params.set('sedeId', sedeId);
   if (estado) params.set('estado', estado);
+  if (pacienteId) params.set('pacienteId', pacienteId);
   return apiGet(`/api/admisiones?${params}`);
 };
 

@@ -1,0 +1,63 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.agregarBtn {
+  background: var(--color-primary-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filaMedicamento {
+  display: grid;
+  grid-template-columns: 1.6fr 0.8fr 1fr 0.8fr auto;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.filaOrden {
+  display: grid;
+  grid-template-columns: 0.7fr 1.8fr 0.9fr auto;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.cupsCodigo {
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.cupsNombre {
+  color: var(--text-primary);
+}
+
+.quitarBtn {
+  background: none;
+  border: none;
+  color: var(--text-placeholder);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+}
+.quitarBtn:hover {
+  color: var(--color-danger);
+}
+.quitarBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

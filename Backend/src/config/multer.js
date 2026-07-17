@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const multer = require('multer');
 
 const UPLOADS_DIR = path.join(__dirname, '..', '..', 'uploads', 'fotos');
+const FIRMAS_DIR = path.join(__dirname, '..', '..', 'uploads', 'firmas');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOADS_DIR),
@@ -27,4 +28,22 @@ const uploadFoto = multer({
   limits: { fileSize: 2 * 1024 * 1024 },
 });
 
-module.exports = { uploadFoto, UPLOADS_DIR };
+const firmaStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, FIRMAS_DIR),
+  filename: (req, file, cb) => cb(null, `${crypto.randomUUID()}.png`),
+});
+
+function firmaFileFilter(req, file, cb) {
+  if (file.mimetype !== 'image/png') {
+    return cb(new Error('La firma debe enviarse como imagen PNG.'));
+  }
+  cb(null, true);
+}
+
+const uploadFirma = multer({
+  storage: firmaStorage,
+  fileFilter: firmaFileFilter,
+  limits: { fileSize: 512 * 1024 },
+});
+
+module.exports = { uploadFoto, uploadFirma, UPLOADS_DIR, FIRMAS_DIR };

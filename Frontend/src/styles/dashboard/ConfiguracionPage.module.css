@@ -1,0 +1,160 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.exito {
+  background: var(--color-success-bg-soft);
+  border: 1px solid var(--color-success);
+  color: var(--color-success-text);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.error {
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.tituloSeccion {
+  margin: 0 0 18px 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.campos {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.grid2Interno {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.filas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filaToggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filaIcono {
+  font-size: 19px;
+  color: var(--text-tertiary);
+}
+
+.filaTexto {
+  flex: 1;
+}
+
+.filaLabel {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.filaSub {
+  font-size: 11.5px;
+  color: var(--text-placeholder);
+}
+
+.switch {
+  width: 46px;
+  height: 26px;
+  border-radius: 13px;
+  background: #cbd5e1;
+  position: relative;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease;
+}
+.switch[data-on='true'] {
+  background: var(--color-success);
+}
+
+.switchKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: left 0.15s ease;
+}
+.switch[data-on='true'] .switchKnob {
+  left: 22px;
+}
+
+.nota {
+  margin-top: 16px;
+  font-size: 11.5px;
+  color: var(--text-placeholder);
+  line-height: 1.5;
+}
+
+.backupFilas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.backupFila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+.backupFila strong {
+  color: var(--text-primary);
+}
+
+.badgeExitosa {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+@media (max-width: 1000px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}

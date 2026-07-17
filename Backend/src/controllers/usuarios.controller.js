@@ -107,6 +107,21 @@ async function uploadFotoUsuario(req, res, next) {
   }
 }
 
+async function aplicarPlantillaUsuario(req, res, next) {
+  try {
+    const usuario = await usuariosService.aplicarPlantillaDeRol(req.params.id);
+    await writeAuditLog(prisma, {
+      accion: 'APLICAR_PLANTILLA_ROL',
+      entidad: 'User',
+      entidadId: usuario.id,
+      detalle: { rol: usuario.rol.nombre },
+    });
+    res.json(usuario);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   parseJsonPayload,
   listUsuarios,
@@ -115,4 +130,5 @@ module.exports = {
   updateUsuario,
   setEstadoUsuario,
   uploadFotoUsuario,
+  aplicarPlantillaUsuario,
 };

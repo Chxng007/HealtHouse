@@ -1,0 +1,125 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.buscadorCard {
+  padding: 20px 22px;
+}
+
+.pacienteCard {
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pacienteInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.pacienteNombre {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text-heading);
+}
+
+.pacienteMeta {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+}
+
+.timelineCard {
+  padding: 20px 22px;
+}
+
+.timelineTitulo {
+  margin: 0 0 14px 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+.error {
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.estadoVacio {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 13.5px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+}
+
+.item:hover {
+  background: var(--color-bg-subtle);
+  border-color: var(--border-strong);
+}
+
+.itemFecha {
+  width: 92px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-label);
+}
+
+.itemHora {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.itemInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemMotivo {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemSub {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

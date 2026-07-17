@@ -122,6 +122,30 @@ async function setFoto(id, fotoUrl) {
   return serializeUser(user);
 }
 
+async function aplicarPlantillaDeRol(id) {
+  const user = await prisma.$transaction(async (tx) => {
+    const usuario = await tx.user.findUniqueOrThrow({ where: { id } });
+    const plantilla = await tx.rolePermission.findMany({ where: { rolId: usuario.rolId } });
+
+    await tx.userPermission.deleteMany({ where: { userId: id } });
+    await tx.userPermission.createMany({
+      data: plantilla.map((p) => ({
+        userId: id,
+        modulo: p.modulo,
+        ver: p.ver,
+        crear: p.crear,
+        editar: p.editar,
+        eliminar: p.eliminar,
+        imprimir: p.imprimir,
+        exportar: p.exportar,
+      })),
+    });
+
+    return tx.user.findUniqueOrThrow({ where: { id }, include: userInclude });
+  });
+  return serializeUser(user);
+}
+
 module.exports = {
   listUsers,
   getUserById,
@@ -129,4 +153,5 @@ module.exports = {
   updateUser,
   setEstado,
   setFoto,
+  aplicarPlantillaDeRol,
 };

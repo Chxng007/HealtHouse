@@ -26,6 +26,7 @@ const admisionInclude = {
   sede: { select: { id: true, nombre: true } },
   eps: { select: { id: true, nombre: true } },
   cita: { select: { id: true, inicio: true, fin: true, estado: true, motivo: true } },
+  atencion: { select: { id: true } },
 };
 
 function conflicto(mensaje) {
@@ -40,13 +41,14 @@ function rangoDeHoy() {
   return { desde, hasta };
 }
 
-async function listAdmisiones({ sedeId, estado } = {}) {
+async function listAdmisiones({ sedeId, estado, pacienteId } = {}) {
   const { desde, hasta } = rangoDeHoy();
   return prisma.admision.findMany({
     where: {
       horaLlegada: { gte: desde, lt: hasta },
       ...(sedeId ? { sedeId } : {}),
       ...(estado ? { estado } : {}),
+      ...(pacienteId ? { pacienteId } : {}),
     },
     include: admisionInclude,
     orderBy: { horaLlegada: 'asc' },
